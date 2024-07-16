@@ -34,7 +34,7 @@ import Foundation
 ///
 /// - Returns: A pointer to the allocated memory containing the key and IV.
 /// - Note: The caller is responsible for freeing the allocated memory using `free()`.
-@_cdecl("s_generate_key_iv")
+@_cdecl("generate_key_iv")
 public func generate_key_iv() -> UnsafeMutableRawPointer? {
     let key = SymmetricKey(size: .bits256)
     let iv = SymmetricKey(size: .bits128)
@@ -60,7 +60,7 @@ public func generate_key_iv() -> UnsafeMutableRawPointer? {
 ///   - iv: Pointer to the AES initialization vector (IV).
 ///   - ciphertext: Pointer to store the encrypted ciphertext data.
 /// - Returns: The length of the encrypted ciphertext data on success, or `CY_ERR_ENCR` on failure.
-@_cdecl("s_encrypt_data")
+@_cdecl("encrypt_data")
 public func encrypt_data(plaintext: UnsafePointer<UInt8>, plaintext_len: Int32, key: UnsafePointer<UInt8>, iv: UnsafePointer<UInt8>, ciphertext: UnsafeMutablePointer<UInt8>) -> Int32 {
     let keyData = Data(bytes: key, count: Int(AES_KEY_SIZE))
     let ivData = Data(bytes: iv, count: Int(AES_BLOCK_SIZE))
@@ -89,7 +89,7 @@ public func encrypt_data(plaintext: UnsafePointer<UInt8>, plaintext_len: Int32, 
 ///   - tag_len: Length of the authentication tag.
 ///   - plaintext: Pointer to store the decrypted plaintext data.
 /// - Returns: The length of the decrypted plaintext data on success, or `CY_ERR_DECR` on failure.
-@_cdecl("s_decrypt_data")
+@_cdecl("decrypt_data")
 public func decrypt_data(ciphertext: UnsafePointer<UInt8>, ciphertext_len: Int32, key: UnsafePointer<UInt8>, iv: UnsafePointer<UInt8>, tag: UnsafePointer<UInt8>, tag_len: Int32, plaintext: UnsafeMutablePointer<UInt8>) -> Int32 {
     let keyData = Data(bytes: key, count: Int(AES_KEY_SIZE / 8))
     let ivData = Data(bytes: iv, count: Int(AES_BLOCK_SIZE))

@@ -1,0 +1,5 @@
+
+module CryptoSwiftWrapper {
+    header "CryptoSwiftWrapper.h"
+    export *
+}

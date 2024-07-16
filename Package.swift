@@ -5,7 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "CryptoSwiftWrapper",
-    platforms: [.iOS(.v17), .macOS(.v14)],
+    platforms: [.iOS(.v18), .macOS(.v15), .macCatalyst(.v18)],
     products: [
         .library(
             name: "CryptoSwiftWrapper",
