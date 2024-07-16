@@ -19,6 +19,32 @@
 //===----------------------------------------------------------------------===//
 ///
 /// \file
+/// \brief Header file providing C interfaces for Swift-Crypto encryption and decryption.
+///
+/// This file defines functions and constants to interact with Swift-Crypto's AES-GCM
+/// encryption and decryption capabilities. It includes functions for key generation,
+/// encryption, and decryption operations using AES-GCM mode.
+///
+/// Usage Example:
+/// \code
+/// unsigned char key[AES_KEY_SIZE / 8];
+/// unsigned char iv[AES_BLOCK_SIZE];
+/// unsigned char tag[AES_GCM_TAG_SIZE];
+/// unsigned char plaintext[256];
+/// unsigned char ciphertext[512];
+///
+/// // Generate key and IV
+/// void *keyIvPtr = generate_key_iv(key, iv);
+///
+/// // Encrypt plaintext
+/// int encrypted_len = encrypt_data(plaintext, sizeof(plaintext), key, iv, tag, sizeof(tag), ciphertext);
+///
+/// // Decrypt ciphertext
+/// int decrypted_len = decrypt_data(ciphertext, encrypted_len, key, iv, tag, sizeof(tag), plaintext);
+///
+/// // Free allocated memory for key and IV
+/// free(keyIvPtr);
+/// \endcode
 ///
 //===----------------------------------------------------------------------===//
 
@@ -40,9 +66,50 @@
 extern "C" {
 #endif
 
+/// Generates a key and initialization vector (IV) for encryption.
+///
+/// This function allocates memory for the combined key and IV.
+///
+/// - Parameters:
+///   - key: Pointer to store the generated encryption key.
+///   - iv: Pointer to store the generated IV.
+/// - Returns: A pointer to the allocated memory containing the key and IV.
+///            The caller is responsible for freeing this memory using `free()`.
 void* generate_key_iv(unsigned char *key, unsigned char *iv);
-int encrypt_data(const unsigned char *plaintext, int plaintext_len, const unsigned char *key, const unsigned char *iv, const unsigned char *tag, int tag_len, unsigned char *ciphertext);
-int decrypt_data(const unsigned char *ciphertext, int ciphertext_len, const unsigned char *key, const unsigned char *iv, const unsigned char *tag, int tag_len, unsigned char *plaintext);
+
+/// Encrypts plaintext data using AES-GCM encryption.
+///
+/// - Parameters:
+///   - plaintext: Pointer to the plaintext data to encrypt.
+///   - plaintext_len: Length of the plaintext data.
+///   - key: Pointer to the encryption key.
+///   - iv: Pointer to the initialization vector (IV).
+///   - tag: Pointer to the authentication tag.
+///   - tag_len: Length of the authentication tag.
+///   - ciphertext: Pointer to store the encrypted ciphertext data.
+/// - Returns: `CY_ERR_ENCR` on encryption failure, or the length of the encrypted
+///            ciphertext data on success.
+int encrypt_data(const unsigned char *plaintext, int plaintext_len,
+                 const unsigned char *key, const unsigned char *iv,
+                 const unsigned char *tag, int tag_len,
+                 unsigned char *ciphertext);
+
+/// Decrypts ciphertext data encrypted using AES-GCM encryption.
+///
+/// - Parameters:
+///   - ciphertext: Pointer to the ciphertext data to decrypt.
+///   - ciphertext_len: Length of the ciphertext data.
+///   - key: Pointer to the encryption key.
+///   - iv: Pointer to the initialization vector (IV).
+///   - tag: Pointer to the authentication tag.
+///   - tag_len: Length of the authentication tag.
+///   - plaintext: Pointer to store the decrypted plaintext data.
+/// - Returns: `CY_ERR_DECR` on decryption failure, or the length of the decrypted
+///            plaintext data on success.
+int decrypt_data(const unsigned char *ciphertext, int ciphertext_len,
+                 const unsigned char *key, const unsigned char *iv,
+                 const unsigned char *tag, int tag_len,
+                 unsigned char *plaintext);
 
 #ifdef __cplusplus
 }
