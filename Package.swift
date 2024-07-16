@@ -5,17 +5,22 @@ import PackageDescription
 
 let package = Package(
     name: "CryptoSwiftWrapper",
+    platforms: [.iOS(.v17), .macOS(.v14)],
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "CryptoSwiftWrapper",
             targets: ["CryptoSwiftWrapper"]),
     ],
+    dependencies: [
+        .package(url: "https://github.com/apple/swift-crypto.git", .upToNextMajor(from: "3.5.2")),
+    ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
         .target(
-            name: "CryptoSwiftWrapper"),
+            name: "CryptoSwiftWrapper", 
+            dependencies: ["_cyfn", .product(name: "Crypto", package: "swift-crypto")],
+            publicHeadersPath: "Sources/CryptoSwiftWrapper/include"),
+        .systemLibrary(
+            name: "_cyfn", path: "Sources/_cyfn"),
         .testTarget(
             name: "CryptoSwiftWrapperTests",
             dependencies: ["CryptoSwiftWrapper"]
