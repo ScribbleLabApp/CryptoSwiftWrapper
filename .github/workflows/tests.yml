@@ -1,0 +1,33 @@
+name: Swift Unit Tests 🚀
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Swift
+      uses: fwal/setup-swift@v1.0.1
+      with:
+        swift-version: '6.0'
+
+    - name: Build and run tests
+      run: swift test --enable-test-discovery
+
+    - name: Upload Test Results
+      if: always()
+      uses: actions/upload-artifact@v2
+      with:
+        name: test-results
+        path: .build/x86_64-apple-macosx/debug/test-results
+
