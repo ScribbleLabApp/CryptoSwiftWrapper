@@ -1,12 +1,11 @@
 #!/bin/bash
 
-GREEN='\033[1;32m'   # Change to bold green
+GREEN='\033[1;32m'
 RED='\033[0;31m'
 ORANGE='\033[0;33m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-# Check if terminal supports ANSI escape codes
 if [[ "$TERM" != "xterm-256color" ]] && ! command -v tput &> /dev/null; then
     echo "Warning: ANSI escape codes not supported. Falling back to basic text formatting."
     # Define basic text formatting functions
@@ -16,10 +15,9 @@ if [[ "$TERM" != "xterm-256color" ]] && ! command -v tput &> /dev/null; then
     orange() { echo -e "${ORANGE}$1${RESET}"; }
     reset() { echo -e "$1"; }
 else
-    # Define functions using tput for terminal text formatting
     bold() { tput bold; echo -e "$1"; tput sgr0; }
     red() { tput setaf 1; echo -e "$1"; tput sgr0; }
-    green() { tput setaf 2; tput bold; echo -e "$1"; tput sgr0; }  # Modify green to be bold
+    green() { tput setaf 2; tput bold; echo -e "$1"; tput sgr0; }
     orange() { tput setaf 3; echo -e "$1"; tput sgr0; }
     reset() { tput sgr0; echo -e "$1"; }
 fi
@@ -30,7 +28,6 @@ echo "Version: 0.1.0-beta (1)"
 echo "Copyright (c) 2024 - ScribbleLabApp. All rights reserved."
 echo ""
 
-# Check for required tools
 if ! command -v cmake &> /dev/null; then
     red "Error: cmake is not installed."
     exit 1
@@ -41,7 +38,6 @@ if ! command -v make &> /dev/null; then
     exit 1
 fi
 
-# Build process
 orange "Creating build folder..."
 mkdir -p build
 cd build
