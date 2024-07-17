@@ -58,3 +58,12 @@ Once CryptoSwiftWrapper is added as a dependency using SPM, you need to ensure i
 
 > [!IMPORTANT]
 Avoid directly including _cyfn/cyfn.h to maintain encapsulation and proper abstraction.
+
+### Build process
+
+After cloning the CryptoSwiftWrapper repository to your local machine, navigate to the project directory in your Terminal. Once there, run our build script:
+
+```sh
+chmod u+x build_script.sh
+./build_script.sh
+```
