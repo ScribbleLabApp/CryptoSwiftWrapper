@@ -9,6 +9,7 @@ The CryptoSwiftWrapper module provides an easy-to-use interface for cryptographi
 
 Use the CryptoSwiftWrapper to perform common cryptographic operations using Swift-Crypto:
 
+- Data integrity and security through SHA256 and SH512 implementation.
 - Generate cryptographically secure keys and initialization vectors.
 - Encrypt and decrypt data using AES-GCM.
 
