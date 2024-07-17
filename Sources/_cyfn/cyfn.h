@@ -56,11 +56,11 @@
 #define AES_KEY_SIZE 256
 #define AES_BLOCK_SIZE 16
 
-#define CY_ERR_GENKEY -100          ///< Error code indicating key generation failure.
-#define CY_ERR_ENCR -101            ///< Error code indicating encryption failure.
-#define CY_ERR_DECR -102            ///< Error code indicating decryption failure.
-#define CY_ERR_INIT -103            ///< Error code indicating initialization failure.
-#define CY_ERR_OSSL -104            ///< Error code indicating an OpenSSL error.
+#define CY_ERR_GENKEY -1            ///< Error code indicating key generation failure.
+#define CY_ERR_ENCR -2              ///< Error code indicating encryption failure.
+#define CY_ERR_DECR -3              ///< Error code indicating decryption failure.
+#define CY_ERR_INIT -4              ///< Error code indicating initialization failure.
+#define CY_ERR_OSSL -5              ///< Error code indicating an OpenSSL error.
 
 #ifdef __cplusplus
 extern "C" {

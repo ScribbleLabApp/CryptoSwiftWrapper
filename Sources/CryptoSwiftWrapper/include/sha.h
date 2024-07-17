@@ -1,4 +1,4 @@
-//===-- CryptoSwiftWrapper/CryptoSwiftWrapper.h - Bridging -----  -*- C -*-===//
+//===-- CryptoSwiftWrapper/include/sha.h - Bridging ------------  -*- C -*-===//
 //                                                                            //
 // This source file is part of the Scribble Foundation open source project    //
 //                                                                            //
@@ -18,12 +18,12 @@
 //                                                                            //
 //===----------------------------------------------------------------------===//
 
-#ifndef CryptoSwiftWrapper_h
-#define CryptoSwiftWrapper_h
+// This is a bridging header for SHA 256 and 512 implementations
 
-#include "CryptoSwiftWrapper/cyfn.h"
-#include "CryptoSwiftWrapper/sha256.h"
-#include "CryptoSwiftWrapper/sha512.h"
-#include "CryptoSwiftWrapper/sha.h"
+#ifndef sha_h
+#define sha_h
 
-#endif /* CryptoSwiftWrapper_h */
+#include "sha256.h"
+#include "sha512.h"
+
+#endif /* sha_h */

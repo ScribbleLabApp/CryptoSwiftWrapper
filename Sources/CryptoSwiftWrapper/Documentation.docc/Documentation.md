@@ -40,3 +40,7 @@ Prefer CryptoSwiftWrapper for its simplicity and integration with Swift. It abst
 
 - ``encrypt_data(plaintext:plaintext_len:key:iv:ciphertext:)``
 - ``decrypt_data(ciphertext:ciphertext_len:key:iv:tag:tag_len:plaintext:)``
+
+### SHA 256 & 512
+
+- <doc:SHA_IMPL>

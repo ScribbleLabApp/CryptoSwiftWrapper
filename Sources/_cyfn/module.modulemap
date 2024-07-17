@@ -1,5 +1,5 @@
 
 module _cyfn {
-    header "cyfn.h"
+    header "cyfnBridging.h"
     export *
 }
