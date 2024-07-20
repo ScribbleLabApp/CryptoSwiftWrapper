@@ -24,6 +24,5 @@
 #include "CryptoSwiftWrapper/cyfn.h"
 #include "CryptoSwiftWrapper/sha256.h"
 #include "CryptoSwiftWrapper/sha512.h"
-#include "CryptoSwiftWrapper/sha.h"
 
 #endif /* CryptoSwiftWrapper_h */

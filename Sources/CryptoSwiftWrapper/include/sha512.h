@@ -23,7 +23,7 @@
 #ifndef sha512_h
 #define sha512_h
 
-// Include the original _cyfn/sha512.h header
-#include "_cyfn/sha512.h"
+// Include the original CCrypto/sha512.h header
+#include "CCrypto/sha512.h"
 
 #endif /* sha512_h */

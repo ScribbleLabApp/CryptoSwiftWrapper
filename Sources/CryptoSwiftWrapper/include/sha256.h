@@ -23,7 +23,7 @@
 #ifndef sha256_h
 #define sha256_h
 
-// Include the original _cyfn/sha256.h header
-#include "_cyfn/sha256.h"
+// Include the original CCrypto/sha256.h header
+#include "CCrypto/sha256.h"
 
 #endif /* sha256_h */

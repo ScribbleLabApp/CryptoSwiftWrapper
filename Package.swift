@@ -30,6 +30,9 @@ let package = Package(
         .library(
             name: "CryptoSwiftWrapper",
             targets: ["CryptoSwiftWrapper"]),
+        .library(
+            name: "CCrypto",
+            targets: ["CCrypto"])
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-crypto.git", .upToNextMajor(from: "3.5.2")),
@@ -37,11 +40,22 @@ let package = Package(
     targets: [
         .target(
             name: "CryptoSwiftWrapper", 
-            dependencies: ["_cyfn", .product(name: "Crypto", package: "swift-crypto")],
+            dependencies: ["_cyfn", "CCrypto", .product(name: "Crypto", package: "swift-crypto")],
+            path: "Sources/CryptoSwiftWrapper",
             resources: [
                 .copy("../../.PrivacyInfo.xcprivacy")
             ],
-            publicHeadersPath: "Sources/CryptoSwiftWrapper/include"
+            publicHeadersPath: "include" // Sources/CryptoSwiftWrapper/
+        ),
+        .target(
+            name: "CCrypto",
+            dependencies: ["_cyfn"],
+            path: "Sources/CCrypto",
+            publicHeadersPath: "include", // Sources/CCrypto/
+            cSettings: [
+                .headerSearchPath("include")
+            ],
+            linkerSettings: []
         ),
         .systemLibrary(
             name: "_cyfn", path: "Sources/_cyfn"),

@@ -9,7 +9,5 @@
 #define cyfnBridging_h
 
 #include "cyfn.h"
-#include "sha256.h"
-#include "sha512.h"
 
 #endif /* cyfnBridging_h */

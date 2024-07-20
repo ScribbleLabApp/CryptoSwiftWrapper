@@ -1,4 +1,4 @@
-//===-- _cyfn/sha512.h - SHA512 ALGORYTHM ----------------------  -*- C -*-===//
+//===-- CCrypto/libc/sha512.h - SHA512 ALGORITHM ------------------*- C -*-===//
 //                                                                            //
 // This source file is part of the Scribble Foundation open source project    //
 //                                                                            //
@@ -25,58 +25,8 @@
 ///
 //===----------------------------------------------------------------------===//
 
-#ifndef sha512_h
-#define sha512_h
-
-#include <stdio.h>
-#include <stdint.h>
+#include "sha512.h"
 #include <string.h>
-#include <stdlib.h>
-#include <errno.h>
-
-#define SHA512_SUCCESS              0          ///< Success code for SHA-512 operations.
-#define SHA512_NULL_INPUT          -8          ///< Error code for null input parameter.
-#define SHA512_NULL_OUTPUT         -9          ///< Error code for null output parameter.
-#define SHA512_MEMORY_ERROR        -10         ///< Error code for memory allocation failure.
-#define SHA512_INVALID_LENGTH      -11         ///< Error code for invalid input length.
-
-#define SHA512_BLOCK_SIZE 128                  ///< Block size in bytes for SHA-512.
-#define SHA512_HASH_SIZE  64                   ///< Hash size in bytes for SHA-512.
-
-/// \defgroup RotationMacros Rotation Macros
-/// @{
-/// Perform a 64-bit right rotate operation on x by n bits.
-/// \param x Input value to be rotated.
-/// \param n Number of bits to rotate by.
-#define ROTR64(x, n) (((x) >> (n)) | ((x) << (64 - (n))))
-/// @}
-
-
-/// \defgroup LogicalFunctions Logical Functions
-/// @{
-/// SHA-512 logical functions.
-/// \param x First input value.
-/// \param y Second input value.
-/// \param z Third input value.
-#define Ch64(x, y, z)    (((x) & (y)) ^ (~(x) & (z)))                   ///< Ch function for SHA-512.
-#define Maj64(x, y, z)   (((x) & (y)) ^ ((x) & (z)) ^ ((y) & (z)))      ///< Maj function for SHA-512.
-/// @}
-
-/// \defgroup SigmaFunctions Sigma Functions
-/// @{
-/// SHA-512 sigma functions.
-/// \param x Input value.
-#define Sigma0_64(x)     (ROTR64(x, 28) ^ ROTR64(x, 34) ^ ROTR64(x, 39)) ///< Sigma0 function for SHA-512.
-#define Sigma1_64(x)     (ROTR64(x, 14) ^ ROTR64(x, 18) ^ ROTR64(x, 41)) ///< Sigma1 function for SHA-512.
-/// @}
-
-/// \defgroup sigmaFunctions sigma Functions
-/// @{
-/// SHA-512 sigma functions.
-/// \param x Input value.
-#define sigma0_64(x)     (ROTR64(x, 1) ^ ROTR64(x, 8) ^ ((x) >> 7))      ///< sigma0 function for SHA-512.
-#define sigma1_64(x)     (ROTR64(x, 19) ^ ROTR64(x, 61) ^ ((x) >> 6))    ///< sigma1 function for SHA-512.
-/// @}
 
 const uint64_t K512[80] = {
     0x428a2f98d728ae22ULL, 0x7137449123ef65cdULL, 0xb5c0fbcfec4d3b2fULL, 0xe9b5dba58189dbbcULL,
@@ -106,25 +56,6 @@ const uint64_t H512[8] = {
     0x510e527fade682d1ULL, 0x9b05688c2b3e6c1fULL, 0x1f83d9abfb41bd6bULL, 0x5be0cd19137e2179ULL
 };
 
-typedef struct {
-    uint64_t words[80];
-} SHA512_Message_Schedule;
-
-#pragma mark - Helper functions start
-
-int sha512_hash(const unsigned char *input, size_t len, unsigned char *output);
-static void sha512_process_block(SHA512_Message_Schedule *schedule, uint64_t state[8]);
-void sha512_print_hash(const unsigned char *hash);
-
-#pragma mark - Helper functions end
-
-/// \brief Perform SHA-512 compression on a single 1024-bit block.
-///
-/// This function compresses the current hash state (state) with the
-/// data in block, updating state with the result.
-///
-/// \param state Current hash state (8 words, 64 bits each).
-/// \param block Input data block (1024 bits).
 void sha512_compress(uint64_t state[8], const unsigned char block[128]) {
     uint64_t W[80];
     uint64_t a, b, c, d, e, f, g, h;
@@ -166,15 +97,6 @@ void sha512_compress(uint64_t state[8], const unsigned char block[128]) {
     state[7] += h;
 }
 
-/// \brief Compute the SHA-512 hash of a given input.
-///
-/// Computes the SHA-512 hash of the input data (input) of specified length
-/// (len), storing the resulting hash in output.
-///
-/// \param input Input data to be hashed.
-/// \param len Length of the input data in bytes.
-/// \param output Buffer to store the resulting hash (must be at least 64 bytes).
-/// \return Returns SHA512_SUCCESS on success, or a negative error code on failure.
 int sha512_hash(const unsigned char *input, size_t len, unsigned char *output) {
     if (input == NULL) {
         return SHA512_NULL_INPUT;
@@ -193,7 +115,6 @@ int sha512_hash(const unsigned char *input, size_t len, unsigned char *output) {
     size_t i;
     size_t remaining = len;
 
-    // Initialize hash state
     for (i = 0; i < 8; i++) {
         state[i] = H512[i];
     }
@@ -238,26 +159,3 @@ int sha512_hash(const unsigned char *input, size_t len, unsigned char *output) {
 
     return SHA512_SUCCESS;
 }
-
-void print_sha512_hash(const unsigned char hash[64])
-{
-    int i;
-    for (i = 0; i < 64; i++) {
-        printf("%02x", hash[i]);
-    }
-    printf("\n");
-}
-
-/// \brief Print a SHA-512 hash value in hexadecimal format.
-///
-/// Prints the SHA-512 hash value in hexadecimal format.
-///
-/// \param hash Hash value to be printed (64 bytes).
-void sha512_print_hash(const unsigned char *hash) {
-    for (int i = 0; i < SHA512_HASH_SIZE; i++) {
-        printf("%02x", hash[i]);
-    }
-    printf("\n");
-}
-
-#endif /* sha512_h */
