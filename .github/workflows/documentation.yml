@@ -31,7 +31,7 @@ jobs:
         run: swift --version
       - name: Select Xcode Version ✨
         run: |
-          sudo xcode-select -switch /Applications/Xcode_16_beta_6.app
+          sudo xcode-select -switch /Applications/Xcode_16.app
       - name: Delete DerivedData directory 🗑️
         run: |
           rm -rf ~/Library/Developer/Xcode/DerivedData
