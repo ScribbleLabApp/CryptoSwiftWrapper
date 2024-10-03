@@ -27,9 +27,6 @@ jobs:
     steps:
       - name: Checkout 🛎️
         uses: actions/checkout@v3
-      - uses: swift-actions/setup-swift@v2
-        with:
-          swift-version: "6.0"
       - name: Get swift version
         run: swift --version
       - name: Select Xcode Version ✨
